@@ -1,0 +1,22 @@
+version: '3.8'
+x-common-vars: &shared_vars
+  ENVAR: myvalue
+x-common-volumes: &com_vols
+  - .:/project
+services:
+  s_0:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    ports:
+    - "${WEB_PORT}:${CONTAINER_PORT}"
+    environment:
+      <<: *shared_vars
+      PROG_NAME: prog_name
+    networks:
+      - mynetwork
+    volumes: *com_vols
+
+networks:
+  mynetwork:
+    driver: bridge
